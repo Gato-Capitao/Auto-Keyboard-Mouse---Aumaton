@@ -399,5 +399,3 @@ while True:
                 if complexoPrograma.ativo:
                     janela["lcomplexo_rodandoaviso"].update(visible=False)
                     complexoPrograma.desativar()
-
-#pyinstaller --noconsole --onefile --icon="icons/cubo.ico"
