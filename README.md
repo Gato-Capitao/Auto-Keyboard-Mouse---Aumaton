@@ -6,4 +6,4 @@
   - Click
   - Press any key or combination of keyboard
   - Wait a certain time.
-U can download the exe here: https://drive.google.com/drive/folders/1a324Ws9jIKI_8dah83akZN3j0wVHMt8J?usp=sharing
+-U can download the exe here: https://drive.google.com/drive/folders/1a324Ws9jIKI_8dah83akZN3j0wVHMt8J?usp=sharing
