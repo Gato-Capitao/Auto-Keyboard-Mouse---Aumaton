@@ -34,7 +34,6 @@ mouseValores = {"acao":"mouse", "modo":"marcada", "x":200, "y":200, "botao":Butt
 clockValores = {"acao":"clock", "modo":"aguarde", "tempo":5, "hora":19, "minuto":25}
 tecladoValores = {"acao":"teclado", "teclas":"", "combinacao":False}
 salvarValores= {"modo":"novo", "nome":None}
-verificacoes = {"teclado":False, "mouse":False, "complexo":False, "janela":"menu", "ativo":False}
 
 #design
 dark = {'BACKGROUND': '#121316',
@@ -132,12 +131,12 @@ class ComplexoT(Thread):
     def __init__(self):
         self.passos = []
         self.ativo = False
-        self.executando = True
+        self.executando = False
     def desativar(self):
         self.executando = False
         self.ativo = False
     def ativar(self):
-        self.executando = True
+        self.executando = False
         self.ativo = True
     def interruptor(self):
         """Pausa e despausa a função principal
@@ -256,20 +255,21 @@ arquivos = [arquivos for arquivos in os.listdir(os.getcwd()+"\data\saves")]#Cria
 
 tecladoObserver = Thread(target=listenerFuncao, daemon=True)#Cria uma Thread que observa o teclado.
 
-jcomplexo, jerro = layoutPrincipal(), []
+jcomplexo, jErro = layoutPrincipal(), []
 tecladoObserver.start()
 
 #processo
 while True:
     #Observa os eventos que acontecem na GUI
     janela, evento, valor = sg.read_all_windows()
-    if janela == jerro and evento == sg.WINDOW_CLOSED or janela == jerro and evento == "lerro_fechar" :
+    if janela == jErro:
         #Esconde a janela erro se clicar em fechar.
-        erro.hide()
+        jErro.hide()
     
     elif evento == sg.WINDOW_CLOSED:
         #Caso clique em fechar na janela principal, quebra o laço de repetição
         break
+    
 
 #complexo
     else:
@@ -297,7 +297,7 @@ while True:
                 try:
                     passos.append(mouseValores)
                 except:
-                    erro = layoutErro()
+                    jErro = layoutErro()
             
             case "lcomplexo_caguarde" | "lcomplexo_cespere":
                 #Muda os valores do dicionaio de acordo com o Radio.
@@ -313,14 +313,14 @@ while True:
                 #Adiciona o dicionario clock na lista passos
                 try:
                     if clockValores["modo"] == "aguarde":
-                        clockValores["tempo"] = int(valor["lcomplexo_ciaguarde"])
+                        clockValores["tempo"] = float(valor["lcomplexo_ciaguarde"])
                         passos.append({"acao":clockValores["acao"], "modo":clockValores["modo"], "tempo":clockValores["tempo"]})
                     elif len(str(valor["lcomplexo_ciespere"])) == 5:
                         clockValores["tempo"] = str(valor["lcomplexo_ciespere"]).replace(":", "")
-                        tente = int(clockValores["tempo"])
+                        tente = float(clockValores["tempo"])
                         passos.append({"acao":clockValores["acao"], "modo":clockValores["modo"], "hora":int(valor["lcomplexo_ciespere"].split(":")[0]), "minuto":int(valor["lcomplexo_ciespere"].split(":")[1])})
                 except:
-                    erro = layoutErro()
+                    jErro = layoutErro()
             
             case "lcomplexo_tadicionart":
                 #Adiciona tecla nas combinações
@@ -371,7 +371,7 @@ while True:
                 try:
                     passos = carregarPassos(valor["lcomplexo_sarquivos"])
                 except:
-                    erro = layoutErro()
+                    jErro = layoutErro()
             
             case "lcomplexo_precarregar":
                 #Recarrega os valores do output na tab salvar
